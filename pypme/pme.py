@@ -18,6 +18,9 @@ def calc_pme(
     - `prices` and `pme_prices` need on additional item at the end representing the price at the reference date, for which the PME is calculated.
     - Obviously, all prices must be in the same currency.
     """
+    if len(prices) != len(pme_prices) or len(cashflows) != len(prices) - 1:
+        raise ValueError("Inconsistent input data")
+
     current_pre = current_pme_pre = 0
     pme_cashflows = []
     for cf, price, price_next, pme_price, pme_price_next in zip(
