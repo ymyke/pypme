@@ -15,10 +15,8 @@ def calc_pme(
 ) -> float:
     """
 
-    # Last is implicit (remaining value);
-    # i.e. len(cashflows) == len(prices) - 1 == len(pme_prices) - 1
-
-    Prerequisite: All prices must be in the same currency.
+    - `prices` and `pme_prices` need on additional item at the end representing the price at the reference date, for which the PME is calculated.
+    - Obviously, all prices must be in the same currency.
     """
     current_pre = current_pme_pre = 0
     pme_cashflows = []
