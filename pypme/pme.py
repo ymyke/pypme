@@ -94,7 +94,7 @@ def calc_pme(
             columns=pd.MultiIndex.from_arrays(
                 [
                     ["Account"] + ["Asset"] * 4 + ["PME"] * 4,
-                    ["NAV"] + ["Price", "NAVpre", "CF", "NAVpost"] * 2,
+                    ["CF"] + ["Price", "NAVpre", "CF", "NAVpost"] * 2,
                 ]
             ),
         )
