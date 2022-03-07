@@ -7,6 +7,10 @@ import numpy_financial as npf
 
 # FIXME Add variant where pme_prices are retrieved on the fly via callback.
 
+# FIXME Add a debug mode? Build a dataframe out of the debug data?
+
+# FIXME Should there be one function for IRR (w/o timestamps) and one for XIRR (w/
+# timestamps)?
 
 def calc_pme(
     cashflows: List[float],
