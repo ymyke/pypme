@@ -2,6 +2,7 @@
 """
 
 from typing import List
+import pandas as pd
 import numpy_financial as npf
 
 DEBUGMODE = True
@@ -11,7 +12,8 @@ DEBUGMODE = True
 
 # FIXME Add variant where pme_prices are retrieved on the fly via callback.
 
-# FIXME Add a debug mode? Build a dataframe out of the debug data?
+# FIXME Add a debug mode? Build a dataframe out of the debug data? -- Or some kind of
+# verbose mode that returns more information?
 
 # FIXME Should there be one function for IRR (w/o timestamps) and one for XIRR (w/
 # timestamps)?
@@ -34,6 +36,7 @@ def calc_pme(
 
     current_pre = 0  # The current NAV of the original asset
     current_pme_pre = 0  # The current NAV of the PME asset
+    df_rows = []  # To build the dataframe
     pme_cashflows = []
     for cf, price, price_next, pme_price, pme_price_next in zip(
         cashflows, prices[:-1], prices[1:], pme_prices[:-1], pme_prices[1:]
@@ -50,10 +53,18 @@ def calc_pme(
         pme_cashflows.append(pme_cf)
 
         if DEBUGMODE:
-            print(
-                f"{current_pre:8.2f} {cf:8.2f} {current_pre + cf:8.2f}  |  "
-                f"{current_pme_pre:8.2f} {pme_cf:8.2f} {current_pme_pre + pme_cf:8.2f}"
+            df_rows.append(
+                [
+                    cf,
+                    current_pre,
+                    cf,
+                    current_pre + cf,
+                    current_pme_pre,
+                    pme_cf,
+                    current_pme_pre + pme_cf,
+                ]
             )
+        # FIXME Adjust signs
 
         # Calculate next:
         current_pre = (current_pre + cf) * price_next / price
@@ -63,5 +74,27 @@ def calc_pme(
     pme_cashflows.append(-current_pme_pre)
     print(f"PME Cashflows: {pme_cashflows}")
 
-    return npf.irr(pme_cashflows)
+    if DEBUGMODE:
+        df_rows.append(
+            [
+                current_pre,
+                current_pre,
+                -current_pre,
+                0,
+                current_pme_pre,
+                -current_pme_pre,
+                0,
+            ]
+        )
+        return npf.irr(pme_cashflows), pd.DataFrame(
+            df_rows,
+            columns=pd.MultiIndex.from_arrays(
+                [
+                    ["Account"] + ["OrigAsset"] * 3 + ["PMEAsset"] * 3,
+                    ["NAV"] + ["NAVpre", "CF", "NAVpost"] * 2,
+                ]
+            ),
+        )
+    else:
+        return npf.irr(pme_cashflows)
     # FIXME should this also return the IRR for complete_cashflows?
