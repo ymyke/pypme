@@ -25,30 +25,30 @@ def calc_pme(
     pme_prices: List[float],
 ) -> float:
     """
-    - Cashflow semantics: A cashflow < 0 signifies a buy (investment) of the respective
-      asset, a cashflow > 0 a sell (divestment).
-    - `prices` and `pme_prices` need on additional item at the end representing the
+    - `cashflows` are from a transaction account perspective.
+    - `prices` and `pme_prices` need an additional item at the end representing the
       price at the reference date, for which the PME is calculated.
     - Obviously, all prices must be in the same currency.
     """
     if len(prices) != len(pme_prices) or len(cashflows) != len(prices) - 1:
         raise ValueError("Inconsistent input data")
 
-    current_pre = 0  # The current NAV of the original asset
-    current_pme_pre = 0  # The current NAV of the PME asset
+    current_asset_pre = 0  # The current NAV of the asset
+    current_pme_pre = 0  # The current NAV of the PME
     df_rows = []  # To build the dataframe
     pme_cashflows = []
     for cf, price, price_next, pme_price, pme_price_next in zip(
         cashflows, prices[:-1], prices[1:], pme_prices[:-1], pme_prices[1:]
     ):
         if cf < 0:
-            # Simply buy from the PME whatever the original cashflow is:
-            pme_cf = cf
+            # Simply buy from the asset and the PME the cashflow amount:
+            asset_cf = pme_cf = -cf
         else:
-            # Calculate the cashflow's ratio of the original asset's NAV at this point
-            # in time and sell that ratio of the PME:
-            ratio = cf / current_pre  # FIXME div by 0
-            pme_cf = current_pme_pre * ratio
+            # Calculate the cashflow's ratio of the asset's NAV at this point in time
+            # and sell that ratio of the PME:
+            asset_cf = -cf
+            ratio = cf / current_asset_pre  # FIXME div by 0
+            pme_cf = -current_pme_pre * ratio
 
         pme_cashflows.append(pme_cf)
 
@@ -56,31 +56,34 @@ def calc_pme(
             df_rows.append(
                 [
                     cf,
-                    current_pre,
-                    cf,
-                    current_pre + cf,
+                    price,
+                    current_asset_pre,
+                    asset_cf,
+                    current_asset_pre + asset_cf,
+                    pme_price,
                     current_pme_pre,
                     pme_cf,
                     current_pme_pre + pme_cf,
                 ]
             )
-        # FIXME Adjust signs
 
         # Calculate next:
-        current_pre = (current_pre + cf) * price_next / price
+        current_asset_pre = (current_asset_pre + asset_cf) * price_next / price
         current_pme_pre = (current_pme_pre + pme_cf) * pme_price_next / pme_price
 
-    # complete_cashflows = cashflows + [-current_pre]
+    # complete_cashflows = cashflows + [-current_asset_pre]
     pme_cashflows.append(-current_pme_pre)
     print(f"PME Cashflows: {pme_cashflows}")
 
     if DEBUGMODE:
         df_rows.append(
             [
-                current_pre,
-                current_pre,
-                -current_pre,
+                current_asset_pre,
+                price,
+                current_asset_pre,
+                -current_asset_pre,
                 0,
+                pme_price,
                 current_pme_pre,
                 -current_pme_pre,
                 0,
@@ -90,8 +93,8 @@ def calc_pme(
             df_rows,
             columns=pd.MultiIndex.from_arrays(
                 [
-                    ["Account"] + ["OrigAsset"] * 3 + ["PMEAsset"] * 3,
-                    ["NAV"] + ["NAVpre", "CF", "NAVpost"] * 2,
+                    ["Account"] + ["Asset"] * 4 + ["PME"] * 4,
+                    ["NAV"] + ["Price", "NAVpre", "CF", "NAVpost"] * 2,
                 ]
             ),
         )
