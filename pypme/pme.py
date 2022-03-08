@@ -18,7 +18,7 @@ def calc_pme(
     cashflows: List[float],
     prices: List[float],
     pme_prices: List[float],
-) -> Tuple[float, pd.DataFrame]:
+) -> Tuple[float, float, pd.DataFrame]:
     """
     - `cashflows` are from a transaction account perspective.
     - `prices` and `pme_prices` need an additional item at the end representing the
@@ -26,7 +26,8 @@ def calc_pme(
     - Obviously, all prices must be in the same currency.
 
     Returns a tuple with:
-    - PME
+    - PME IRR
+    - Asset IRR
     - dataframe containing all the cashflows, prices, and values used to derive the PME
     """
     if len(prices) != len(pme_prices) or len(cashflows) != len(prices) - 1:
@@ -90,5 +91,4 @@ def calc_pme(
             ]
         ),
     )
-    return (npf.irr(df["PME", "CF"]), df)
-    # FIXME should this also return the IRR for complete_cashflows?
+    return (npf.irr(df["PME", "CF"]), npf.irr(df["Asset", "CF"]), df)
