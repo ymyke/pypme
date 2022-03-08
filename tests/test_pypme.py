@@ -22,5 +22,5 @@ def test_version():
     ],
 )
 def test_calc_pme(cashflows, prices, pme_prices, target_pme_irr):
-    pme_irr = calc_pme(cashflows=cashflows, prices=prices, pme_prices=pme_prices)
+    pme_irr = calc_pme(cashflows=cashflows, prices=prices, pme_prices=pme_prices)[0]
     assert round(pme_irr * 100.0, 2) == round(target_pme_irr, 2)
