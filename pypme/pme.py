@@ -35,7 +35,7 @@ def calc_pme(
     current_asset_pre = 0  # The current NAV of the asset
     current_pme_pre = 0  # The current NAV of the PME
     df_rows = []  # To build the dataframe
-    for cf, price, price_next, pme_price, pme_price_next in zip(
+    for cf, asset_price, asset_price_next, pme_price, pme_price_next in zip(
         cashflows, prices[:-1], prices[1:], pme_prices[:-1], pme_prices[1:]
     ):
         if cf < 0:
@@ -51,7 +51,7 @@ def calc_pme(
         df_rows.append(
             [
                 cf,
-                price,
+                asset_price,
                 current_asset_pre,
                 asset_cf,
                 current_asset_pre + asset_cf,
@@ -63,13 +63,15 @@ def calc_pme(
         )
 
         # Calculate next:
-        current_asset_pre = (current_asset_pre + asset_cf) * price_next / price
+        current_asset_pre = (
+            (current_asset_pre + asset_cf) * asset_price_next / asset_price
+        )
         current_pme_pre = (current_pme_pre + pme_cf) * pme_price_next / pme_price
 
     df_rows.append(
         [
             current_asset_pre,
-            price,
+            asset_price,
             current_asset_pre,
             -current_asset_pre,
             0,
