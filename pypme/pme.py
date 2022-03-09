@@ -93,6 +93,4 @@ def calc_pme(
             ]
         ),
     )
-    # FIXME Does the Account column really make sense? Only in connection w the Asset,
-    # not w the PME...?
     return (npf.irr(df["PME", "CF"]), npf.irr(df["Asset", "CF"]), df)
