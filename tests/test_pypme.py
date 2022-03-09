@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from pypme import __version__, verbose_pme
+from pypme import __version__, verbose_pme, pme
 
 
 def test_version():
@@ -22,9 +22,14 @@ def test_version():
     ],
 )
 def test_verbose_pme(cashflows, prices, pme_prices, target_pme_irr, target_asset_irr):
+    """`verbose_pme` works with all kinds of input parameters."""
     pme_irr, asset_irr, df = verbose_pme(
         cashflows=cashflows, prices=prices, pme_prices=pme_prices
     )
     assert round(pme_irr * 100.0, 2) == round(target_pme_irr, 2)
     assert round(asset_irr * 100.0, 2) == round(target_asset_irr, 2)
     assert isinstance(df, pd.DataFrame)
+
+def test_pme():
+    """`pme` properly passes args and returns to and back from `verbose_pme`."""
+    assert pme([-10, 5], [1, 2, 1], [1, 1, 0.5]) == -0.25

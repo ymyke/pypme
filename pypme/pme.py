@@ -21,13 +21,13 @@ def verbose_pme(
     prices: List[float],
     pme_prices: List[float],
 ) -> Tuple[float, float, pd.DataFrame]:
-    """Calculate PME for evenly spaced cashflows.
+    """Calculate PME for evenly spaced cashflows and return vebose information.
 
     Args:
     - `cashflows`: The cashflows from a transaction account perspective.
-    - `prices`: Asset's prices at each interval. 
-    - `pme_prices`: PME's prices at each interval. 
-    
+    - `prices`: Asset's prices at each interval.
+    - `pme_prices`: PME's prices at each interval.
+
     Note:
     - Both `prices` and `pme_prices` need an additional item at the end representing the
       price at the last interval, for which the PME is calculated.
@@ -100,3 +100,23 @@ def verbose_pme(
         ),
     )
     return (npf.irr(df["PME", "CF"]), npf.irr(df["Asset", "CF"]), df)
+
+
+def pme(
+    cashflows: List[float],
+    prices: List[float],
+    pme_prices: List[float],
+) -> float:
+    """Calculate PME for evenly spaced cashflows and return the PME IRR only.
+
+    Args:
+    - `cashflows`: The cashflows from a transaction account perspective.
+    - `prices`: Asset's prices at each interval.
+    - `pme_prices`: PME's prices at each interval.
+
+    Note:
+    - Both `prices` and `pme_prices` need an additional item at the end representing the
+      price at the last interval, for which the PME is calculated.
+    - Obviously, all prices must be in the same (implicit) currency.
+    """
+    return verbose_pme(cashflows, prices, pme_prices)[0]
