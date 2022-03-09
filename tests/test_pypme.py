@@ -69,8 +69,28 @@ def test_xpme():
     assert xpme([date(1, 1, 1), date(1, 1, 2)], [-1], [1, 1], [1, 1]) == 0
 
 
-# FIXME Test w empty cashflow list and catch the empty cashflow exception
-# FIXME Test w div by zero?
+def test_empty_cashflow():
+    with pytest.raises(ValueError) as exc:
+        pme([], [], [])
+    assert "Must have at least one cashflow" in str(exc)
+
+
+def test_negative_cashflow():
+    with pytest.raises(ValueError) as exc:
+        pme([1], [], [])
+    assert "At least one cashflow must be negative" in str(exc)
+
+
+def test_negative_prices():
+    with pytest.raises(ValueError) as exc:
+        pme([-1], [0], [])
+    assert "All prices must be > 0" in str(exc)
+
+
+def test_inconsistent_input():
+    with pytest.raises(ValueError) as exc:
+        pme([-1], [], [])
+    assert "Inconsistent input data" in str(exc)
 
 
 @st.composite
