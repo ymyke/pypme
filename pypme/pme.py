@@ -21,11 +21,17 @@ def verbose_pme(
     prices: List[float],
     pme_prices: List[float],
 ) -> Tuple[float, float, pd.DataFrame]:
-    """
-    - `cashflows` are from a transaction account perspective.
-    - `prices` and `pme_prices` need an additional item at the end representing the
-      price at the reference date, for which the PME is calculated.
-    - Obviously, all prices must be in the same currency.
+    """Calculate PME for evenly spaced cashflows.
+
+    Args:
+    - `cashflows`: The cashflows from a transaction account perspective.
+    - `prices`: Asset's prices at each interval. 
+    - `pme_prices`: PME's prices at each interval. 
+    
+    Note:
+    - Both `prices` and `pme_prices` need an additional item at the end representing the
+      price at the last interval, for which the PME is calculated.
+    - Obviously, all prices must be in the same (implicit) currency.
 
     Returns a tuple with:
     - PME IRR
