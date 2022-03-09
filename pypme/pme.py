@@ -5,6 +5,8 @@ from typing import List, Tuple
 import pandas as pd
 import numpy_financial as npf
 
+# FIXME Maybe have pme(), verbose_pme(), xpme(), and verbose_xpme() in the end?
+
 # FIXME First w/o timestamps and therefore w/ normal IRR, later to be extended to work
 # w/ timestamps and XIRR.
 
@@ -91,4 +93,6 @@ def calc_pme(
             ]
         ),
     )
+    # FIXME Does the Account column really make sense? Only in connection w the Asset,
+    # not w the PME...?
     return (npf.irr(df["PME", "CF"]), npf.irr(df["Asset", "CF"]), df)
