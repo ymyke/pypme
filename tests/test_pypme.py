@@ -21,7 +21,7 @@ def test_version():
         ([-10, 1], [1, 1, 1], [1, 1, 1], 0, 0),
     ],
 )
-def test_calc_pme(cashflows, prices, pme_prices, target_pme_irr, target_asset_irr):
+def test_verbose_pme(cashflows, prices, pme_prices, target_pme_irr, target_asset_irr):
     pme_irr, asset_irr, df = verbose_pme(
         cashflows=cashflows, prices=prices, pme_prices=pme_prices
     )
