@@ -80,11 +80,11 @@ def verbose_pme(
     df_rows.append(
         [
             current_asset_pre,
-            asset_price,
+            asset_price_next,
             current_asset_pre,
             -current_asset_pre,
             0,
-            pme_price,
+            pme_price_next,
             current_pme_pre,
             -current_pme_pre,
             0,
