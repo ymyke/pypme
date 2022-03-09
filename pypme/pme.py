@@ -30,15 +30,7 @@ import pandas as pd
 import numpy_financial as npf
 from xirr.math import listsXirr
 
-# FIXME Maybe have pme(), verbose_pme(), xpme(), and verbose_xpme() in the end?
-
-# FIXME First w/o timestamps and therefore w/ normal IRR, later to be extended to work
-# w/ timestamps and XIRR.
-
 # FIXME Add variant where pme_prices are retrieved on the fly via callback.
-
-# FIXME Should there be one function for IRR (w/o timestamps) and one for XIRR (w/
-# timestamps)?
 
 
 def verbose_pme(
