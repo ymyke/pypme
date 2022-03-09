@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from pypme import __version__, calc_pme
+from pypme import __version__, verbose_pme
 
 
 def test_version():
@@ -24,7 +24,7 @@ def test_version():
     ],
 )
 def test_calc_pme(cashflows, prices, pme_prices, target_pme_irr, target_asset_irr):
-    pme_irr, asset_irr, df = calc_pme(
+    pme_irr, asset_irr, df = verbose_pme(
         cashflows=cashflows, prices=prices, pme_prices=pme_prices
     )
     assert round(pme_irr * 100.0, 2) == round(target_pme_irr, 2)

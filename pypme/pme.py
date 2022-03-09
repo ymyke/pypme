@@ -16,7 +16,7 @@ import numpy_financial as npf
 # timestamps)?
 
 
-def calc_pme(
+def verbose_pme(
     cashflows: List[float],
     prices: List[float],
     pme_prices: List[float],
