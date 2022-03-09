@@ -7,9 +7,6 @@ def test_version():
     assert __version__ == "0.1.0"
 
 
-# FIXME Add many more test data sets.
-
-
 @pytest.mark.parametrize(
     "cashflows, prices, pme_prices, target_pme_irr, target_asset_irr",
     [
