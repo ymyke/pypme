@@ -21,6 +21,7 @@ def test_version():
             7.77,
         ),
         ([-10, 5], [1, 2, 1], [1, 1, 0.5], -25, 15.14),
+        ([-10, 1], [1, 1, 1], [1, 1, 1], 0, 0),
     ],
 )
 def test_calc_pme(cashflows, prices, pme_prices, target_pme_irr, target_asset_irr):
