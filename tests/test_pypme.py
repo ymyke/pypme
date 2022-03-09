@@ -1,6 +1,8 @@
 import pytest
 from datetime import date
+from hypothesis import given, strategies as st, settings, Verbosity
 import pandas as pd
+from xirr.math import xnpv
 from pypme import __version__, verbose_pme, pme, verbose_xpme, xpme
 
 
@@ -65,3 +67,29 @@ def test_verbose_xpme(
 def test_xpme():
     """`xpme` properly passes args and returns to and back from `verbose_xpme`."""
     assert xpme([date(1, 1, 1), date(1, 1, 2)], [-1], [1, 1], [1, 1]) == 0
+
+
+# FIXME Test w empty cashflow list and catch the empty cashflow exception
+# FIXME Test w div by zero?
+
+
+@st.composite
+def same_len_lists(draw):
+    n = draw(st.integers(min_value=2, max_value=100))
+    floatlist = st.lists(st.floats(), min_size=n, max_size=n)
+    datelist = st.lists(st.dates(), min_size=n, max_size=n)
+    return (draw(datelist), draw(floatlist), draw(floatlist), draw(floatlist))
+
+
+@given(same_len_lists())
+# @settings(verbosity=Verbosity.verbose)
+def test_xpme_hypothesis_driven(lists):
+    try:
+        pme_irr, asset_irr, df = verbose_xpme(
+            lists[0], lists[1][:-1], lists[2], lists[3]
+        )
+    except ValueError as exc:
+        assert "least one cashflow" in str(exc) or "All prices" in str(exc)
+    else:
+        assert xnpv(df["PME", "CF"], pme_irr) == 0
+        assert xnpv(df["Asset", "CF"], asset_irr) == 0
