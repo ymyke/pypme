@@ -69,28 +69,19 @@ def test_xpme():
     assert xpme([date(1, 1, 1), date(1, 1, 2)], [-1], [1, 1], [1, 1]) == 0
 
 
-def test_empty_cashflow():
+@pytest.mark.parametrize(
+    "list1, list2, list3, exc_pattern",
+    [
+        ([], [], [], "Must have at least one cashflow"),
+        ([1], [], [], "At least one cashflow must be negative"),
+        ([-1], [0], [], "All prices must be > 0"),
+        ([-1], [], [], "Inconsistent input data"),
+    ],
+)
+def test_for_valueerrors(list1, list2, list3, exc_pattern):
     with pytest.raises(ValueError) as exc:
-        pme([], [], [])
-    assert "Must have at least one cashflow" in str(exc)
-
-
-def test_negative_cashflow():
-    with pytest.raises(ValueError) as exc:
-        pme([1], [], [])
-    assert "At least one cashflow must be negative" in str(exc)
-
-
-def test_negative_prices():
-    with pytest.raises(ValueError) as exc:
-        pme([-1], [0], [])
-    assert "All prices must be > 0" in str(exc)
-
-
-def test_inconsistent_input():
-    with pytest.raises(ValueError) as exc:
-        pme([-1], [], [])
-    assert "Inconsistent input data" in str(exc)
+        pme(list1, list2, list3)
+    assert exc_pattern in str(exc)
 
 
 @st.composite
