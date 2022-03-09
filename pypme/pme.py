@@ -1,9 +1,34 @@
-"""
+"""Calculate PME (Public Market Equivalent) for both evenly and unevenly spaced
+cashflows. Calculation according to
+https://en.wikipedia.org/wiki/Public_Market_Equivalent#Modified_PME
+
+Args:
+
+- `dates`: The points in time. (Only for `xpme` variants.)
+- `cashflows`: The cashflows from a transaction account perspective.
+- `prices`: Asset's prices at each interval / point in time.
+- `pme_prices`: PME's prices at each interval / point in time.
+
+Note:
+
+- Both `prices` and `pme_prices` need an additional item at the end for the last
+  interval / point in time, for which the PME is calculated.
+- Obviously, all prices must be in the same (implicit) currency.
+- `cashflows` has one fewer entry than the other lists because the last cashflow is
+  implicitly assumed to be the current NAV at that time.
+
+Verbose versions return a tuple with:
+
+- PME IRR
+- Asset IRR
+- Dataframe containing all the cashflows, prices, and values used to derive the PME
 """
 
 from typing import List, Tuple
+from datetime import date
 import pandas as pd
 import numpy_financial as npf
+from xirr.math import listsXirr
 
 # FIXME Maybe have pme(), verbose_pme(), xpme(), and verbose_xpme() in the end?
 
@@ -21,23 +46,7 @@ def verbose_pme(
     prices: List[float],
     pme_prices: List[float],
 ) -> Tuple[float, float, pd.DataFrame]:
-    """Calculate PME for evenly spaced cashflows and return vebose information.
-
-    Args:
-    - `cashflows`: The cashflows from a transaction account perspective.
-    - `prices`: Asset's prices at each interval.
-    - `pme_prices`: PME's prices at each interval.
-
-    Note:
-    - Both `prices` and `pme_prices` need an additional item at the end representing the
-      price at the last interval, for which the PME is calculated.
-    - Obviously, all prices must be in the same (implicit) currency.
-
-    Returns a tuple with:
-    - PME IRR
-    - Asset IRR
-    - dataframe containing all the cashflows, prices, and values used to derive the PME
-    """
+    """Calculate PME for evenly spaced cashflows and return vebose information."""
     if len(prices) != len(pme_prices) or len(cashflows) != len(prices) - 1:
         raise ValueError("Inconsistent input data")
 
@@ -107,16 +116,37 @@ def pme(
     prices: List[float],
     pme_prices: List[float],
 ) -> float:
-    """Calculate PME for evenly spaced cashflows and return the PME IRR only.
-
-    Args:
-    - `cashflows`: The cashflows from a transaction account perspective.
-    - `prices`: Asset's prices at each interval.
-    - `pme_prices`: PME's prices at each interval.
-
-    Note:
-    - Both `prices` and `pme_prices` need an additional item at the end representing the
-      price at the last interval, for which the PME is calculated.
-    - Obviously, all prices must be in the same (implicit) currency.
-    """
+    """Calculate PME for evenly spaced cashflows and return the PME IRR only."""
     return verbose_pme(cashflows, prices, pme_prices)[0]
+
+
+def verbose_xpme(
+    dates: List[date],
+    cashflows: List[float],
+    prices: List[float],
+    pme_prices: List[float],
+) -> Tuple[float, float, pd.DataFrame]:
+    """Calculate PME for unevenly spaced / scheduled cashflows and return vebose
+    information.
+
+    Requires the points in time as `dates` as an input parameter in addition to the ones
+    required by `pme()`.
+    """
+    if len(dates) != len(prices):
+        raise ValueError("Inconsistent input data")
+    df = verbose_pme(cashflows, prices, pme_prices)[2]
+    df["Dates"] = dates
+    df.set_index("Dates", inplace=True)
+    return listsXirr(dates, df["PME", "CF"]), listsXirr(dates, df["Asset", "CF"]), df
+
+
+def xpme(
+    dates: List[date],
+    cashflows: List[float],
+    prices: List[float],
+    pme_prices: List[float],
+) -> float:
+    """Calculate PME for unevenly spaced / scheduled cashflows and return the PME IRR
+    only.
+    """
+    return verbose_xpme(dates, cashflows, prices, pme_prices)[0]
