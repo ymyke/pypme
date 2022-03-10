@@ -1,10 +1,5 @@
 pypme – Python library for PME (Public Market Equivalent) calculation
 
-## Todo
-
-* Check my old code for possible additional testcases.
-
-
 ## PME
 
 - Example calculation:
