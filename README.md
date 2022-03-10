@@ -25,12 +25,3 @@ Results in this df and IRRs of 0:
 |    1 |               500 |                  1 |                  10 |            -500 |                 -490 |                1 |                10 |          -500 |               -490 |
 |    2 |              -490 |                  1 |                -490 |             490 |                    0 |                1 |              -490 |           490 |                  0 |
 
-
-## Working w poetry
-
-- https://stackoverflow.com/questions/59882884/vscode-doesnt-show-poetry-virtualenvs-in-select-interpreter-option
-  - To store the venv folder locally and make sure vscode can recognize it: `poetry config virtualenvs.in-project true`
-  - The article also explains what to do if you already created the venv file.
-- Used `poetry env use C:\Users\myken\AppData\Local\Programs\Python\Python39\python.exe` to set specific python version.
-- https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f
-- https://betterprogramming.pub/avoid-the-snake-pit-of-python-package-management-with-poetry-54ab186cf2a4
