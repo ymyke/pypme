@@ -20,11 +20,7 @@ pmeirr, assetirr, df = verbose_xpme(
 Will return `0.5525698793027238` and  `0.19495150355969598` for the IRRs and produce this
 dataframe:
 
-| Dates      | ('Account', 'CF') | ('Asset', 'Price') | ('Asset', 'NAVpre') | ('Asset', 'CF') | ('Asset', 'NAVpost') | ('PME', 'Price') | ('PME', 'NAVpre') | ('PME', 'CF') | ('PME', 'NAVpost') |
-| :--------- | ----------------: | -----------------: | ------------------: | --------------: | -------------------: | ---------------: | ----------------: | ------------: | -----------------: |
-| 2015-01-01 |            -10000 |                100 |                   0 |           10000 |                10000 |              100 |                 0 |         10000 |              10000 |
-| 2015-06-12 |              7500 |                120 |               12000 |           -7500 |                 4500 |              150 |             15000 |         -9375 |               5625 |
-| 2016-02-15 |              3750 |                100 |                3750 |           -3750 |                    0 |              100 |              3750 |         -3750 |                  0 |
+![Example dataframe](images/example_df.png)
 
 Notes:
 - The `cashflows` are interpreted from a transaction account that is used to buy from an
@@ -60,12 +56,7 @@ pmeirr, assetirr, df = verbose_pme(
 
 Results in this df and IRRs of 0:
 
-|      | ('Account', 'CF') | ('Asset', 'Price') | ('Asset', 'NAVpre') | ('Asset', 'CF') | ('Asset', 'NAVpost') | ('PME', 'Price') | ('PME', 'NAVpre') | ('PME', 'CF') | ('PME', 'NAVpost') |
-| ---: | ----------------: | -----------------: | ------------------: | --------------: | -------------------: | ---------------: | ----------------: | ------------: | -----------------: |
-|    0 |               -10 |                  1 |                   0 |              10 |                   10 |                1 |                 0 |            10 |                 10 |
-|    1 |               500 |                  1 |                  10 |            -500 |                 -490 |                1 |                10 |          -500 |               -490 |
-|    2 |              -490 |                  1 |                -490 |             490 |                    0 |                1 |              -490 |           490 |                  0 |
-
+![Garbage example df](images/garbage_example_df.png)
 
 ## References
 
