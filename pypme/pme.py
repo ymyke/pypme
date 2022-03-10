@@ -58,7 +58,7 @@ def verbose_pme(
             # Calculate the cashflow's ratio of the asset's NAV at this point in time
             # and sell that ratio of the PME:
             asset_cf = -cf
-            ratio = cf / current_asset_pre  # FIXME div by 0
+            ratio = cf / current_asset_pre
             pme_cf = -current_pme_pre * ratio
 
         df_rows.append(
