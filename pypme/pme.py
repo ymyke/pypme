@@ -3,14 +3,12 @@ cashflows. Calculation according to
 https://en.wikipedia.org/wiki/Public_Market_Equivalent#Modified_PME
 
 Args:
-
 - `dates`: The points in time. (Only for `xpme` variants.)
 - `cashflows`: The cashflows from a transaction account perspective.
 - `prices`: Asset's prices at each interval / point in time.
 - `pme_prices`: PME's prices at each interval / point in time.
 
 Note:
-
 - Both `prices` and `pme_prices` need an additional item at the end for the last
   interval / point in time, for which the PME is calculated.
 - Obviously, all prices must be in the same (implicit) currency.
@@ -18,7 +16,6 @@ Note:
   implicitly assumed to be the current NAV at that time.
 
 Verbose versions return a tuple with:
-
 - PME IRR
 - Asset IRR
 - Dataframe containing all the cashflows, prices, and values used to derive the PME
