@@ -27,8 +27,6 @@ import pandas as pd
 import numpy_financial as npf
 from xirr.math import listsXirr
 
-# FIXME Add variant where pme_prices are retrieved on the fly via callback.
-
 
 def verbose_pme(
     cashflows: List[float],
