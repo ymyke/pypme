@@ -6,6 +6,8 @@ authors = ["ymyke"]
 license = "MIT"
 repository = "https://github.com/ymyke/pypme"
 homepage = "https://github.com/ymyke/pypme"
+readme = "README.md"
+keywords = ["python" "finance" "investing" "financial-analysis" "pme" "investment-analysis"]
 
 [tool.poetry.dependencies]
 python = ">=3.8, <3.10"
