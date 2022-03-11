@@ -20,7 +20,7 @@ pmeirr, assetirr, df = verbose_xpme(
 Will return `0.5525698793027238` and  `0.19495150355969598` for the IRRs and produce this
 dataframe:
 
-![Example dataframe](images/example_df.png)
+![Example dataframe](https://raw.githubusercontent.com/ymyke/pypme/main/images/example_df.png)
 
 Notes:
 - The `cashflows` are interpreted from a transaction account that is used to buy from an
@@ -56,7 +56,7 @@ pmeirr, assetirr, df = verbose_pme(
 
 Results in this df and IRRs of 0:
 
-![Garbage example df](images/garbage_example_df.png)
+![Garbage example df](https://raw.githubusercontent.com/ymyke/pypme/main/images/garbage_example_df.png)
 
 ## References
 

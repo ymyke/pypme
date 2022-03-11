@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypme"
-version = "0.1.2"
+version = "0.1.3"
 description = "Python library for PME (Public Market Equivalent) calculation"
 authors = ["ymyke"]
 license = "MIT"
