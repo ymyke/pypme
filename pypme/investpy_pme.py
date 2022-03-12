@@ -15,19 +15,9 @@ import investpy
 # FIXME Also add a version based on SearchObj?
 
 
-# Do the lookup:
-def retrieve_from_investpy(
-    ticker: str, type: str, country: str, from_date: date, to_date: date
-) -> pd.DataFrame:
-
-    return getattr(investpy, "get_" + type + "_historical_data")(
-        **{
-            type: ticker,
-            "country": country,
-            "from_date": from_date,
-            "to_date": to_date,
-        }
-    )
+def retrieve_from_investpy(ticker: str, type: str, **kwargs) -> pd.DataFrame:
+    kwargs[type] = ticker
+    return getattr(investpy, "get_" + type + "_historical_data")(**kwargs)
 
 
 def investpy_verbose_pme(
