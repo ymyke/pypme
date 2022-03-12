@@ -55,5 +55,17 @@ def investpy_verbose_pme(
     return verbose_xpme(dates, cashflows, prices, pme_prices)
 
 
-def investpy_pme():
-    pass
+def investpy_pme(
+    dates: List[date],
+    cashflows: List[float],
+    prices: List[float],
+    pme_ticker: str,
+    pme_type: str = "stock",
+    pme_country: str = "united states",
+) -> Tuple[float, float, pd.DataFrame]:
+    """Calculate PME for unevenly spaced / scheduled cashflows and return the PME IRR
+    only. FIXME
+    """
+    return investpy_verbose_pme(
+        dates, cashflows, prices, pme_ticker, pme_type, pme_country
+    )[0]
