@@ -16,6 +16,8 @@ import investpy
 
 
 def retrieve_from_investpy(ticker: str, type: str, **kwargs) -> pd.DataFrame:
+    kwargs["from_date"] = kwargs["from_date"].strftime("%d/%m/%Y")
+    kwargs["to_date"] = kwargs["to_date"].strftime("%d/%m/%Y")
     kwargs[type] = ticker
     return getattr(investpy, "get_" + type + "_historical_data")(**kwargs)
 
