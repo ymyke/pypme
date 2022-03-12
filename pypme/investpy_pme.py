@@ -19,6 +19,8 @@ from .pme import verbose_xpme
 
 # FIXME Add tests
 
+# FIXME Add a version that also takes a ticker for the asset and looks up its prices?
+
 
 def get_historical_data(ticker: str, type: str, **kwargs) -> pd.DataFrame:
     """Small wrapper to make the investpy interface accessible in a more unified fashion.
