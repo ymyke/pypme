@@ -21,8 +21,7 @@ from .pme import verbose_xpme
 
 
 def get_historical_data(ticker: str, type: str, **kwargs) -> pd.DataFrame:
-    """Small wrapper to make the investpy interface accessible in a more unified
-    fashion.
+    """Small wrapper to make the investpy interface accessible in a more unified fashion.
     """
     kwargs[type] = ticker
     return getattr(investpy, "get_" + type + "_historical_data")(**kwargs)
@@ -36,8 +35,7 @@ def investpy_verbose_pme(
     pme_type: str = "stock",
     pme_country: str = "united states",
 ) -> Tuple[float, float, pd.DataFrame]:
-    """Calculate PME for unevenly spaced / scheduled cashflows and return vebose
-    information. FIXME
+    """Calculate PME for unevenly spaced / scheduled cashflows and return vebose information. FIXME
     """
     dates_as_str = [x.strftime("%d/%m/%Y") for x in sorted(dates)]
     pmedf = get_historical_data(
@@ -63,8 +61,7 @@ def investpy_pme(
     pme_type: str = "stock",
     pme_country: str = "united states",
 ) -> Tuple[float, float, pd.DataFrame]:
-    """Calculate PME for unevenly spaced / scheduled cashflows and return the PME IRR
-    only. FIXME
+    """Calculate PME for unevenly spaced / scheduled cashflows and return the PME IRR only. FIXME
     """
     return investpy_verbose_pme(
         dates, cashflows, prices, pme_ticker, pme_type, pme_country
