@@ -32,9 +32,6 @@ def investpy_verbose_pme(
 ) -> Tuple[float, float, pd.DataFrame]:
     """Calculate PME for unevenly spaced / scheduled cashflows and return vebose
     information.
-
-    Requires the points in time as `dates` as an input parameter in addition to the ones
-    required by `pme()`.
     """
 
 
