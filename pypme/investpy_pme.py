@@ -27,7 +27,7 @@ def investpy_verbose_pme(
     cashflows: List[float],
     prices: List[float],
     pme_ticker: str,
-    pme_type: str = "stocks",
+    pme_type: str = "stock",
     pme_country: str = "united states",
 ) -> Tuple[float, float, pd.DataFrame]:
     """Calculate PME for unevenly spaced / scheduled cashflows and return vebose
