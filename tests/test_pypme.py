@@ -7,7 +7,7 @@ from pypme import __version__, verbose_pme, pme, verbose_xpme, xpme
 
 
 def test_version():
-    assert __version__ == "0.1.3"
+    assert __version__ == "0.2.0"
 
 
 @pytest.mark.parametrize(
