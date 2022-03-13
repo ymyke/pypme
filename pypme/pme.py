@@ -1,5 +1,7 @@
 """Calculate PME (Public Market Equivalent) for both evenly and unevenly spaced
-cashflows. Calculation according to
+cashflows. 
+
+Calculation according to
 https://en.wikipedia.org/wiki/Public_Market_Equivalent#Modified_PME
 
 Args:
@@ -11,7 +13,6 @@ Args:
 Note:
 - Both `prices` and `pme_prices` need an additional item at the end for the last
   interval / point in time, for which the PME is calculated.
-- Obviously, all prices must be in the same (implicit) currency.
 - `cashflows` has one fewer entry than the other lists because the last cashflow is
   implicitly assumed to be the current NAV at that time.
 
@@ -127,6 +128,8 @@ def verbose_xpme(
     Requires the points in time as `dates` as an input parameter in addition to the ones
     required by `pme()`.
     """
+    if dates != sorted(dates):
+        raise ValueError("Dates must be in order")
     if len(dates) != len(prices):
         raise ValueError("Inconsistent input data")
     df = verbose_pme(cashflows, prices, pme_prices)[2]
