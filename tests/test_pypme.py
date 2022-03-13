@@ -92,12 +92,18 @@ def test_for_valueerrors(list1, list2, list3, exc_pattern):
     assert exc_pattern in str(exc)
 
 
+def test_for_non_sorted_dates():
+    with pytest.raises(ValueError) as exc:
+        xpme([date(2000, 1, 1), date(1900, 1, 1)], [], [], [])
+    assert "Dates must be in order" in str(exc)
+
+
 @st.composite
 def same_len_lists(draw):
     n = draw(st.integers(min_value=2, max_value=100))
     floatlist = st.lists(st.floats(), min_size=n, max_size=n)
     datelist = st.lists(st.dates(), min_size=n, max_size=n)
-    return (draw(datelist), draw(floatlist), draw(floatlist), draw(floatlist))
+    return (sorted(draw(datelist)), draw(floatlist), draw(floatlist), draw(floatlist))
 
 
 @given(same_len_lists())

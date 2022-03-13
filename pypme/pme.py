@@ -128,6 +128,8 @@ def verbose_xpme(
     Requires the points in time as `dates` as an input parameter in addition to the ones
     required by `pme()`.
     """
+    if dates != sorted(dates):
+        raise ValueError("Dates must be in order")
     if len(dates) != len(prices):
         raise ValueError("Inconsistent input data")
     df = verbose_pme(cashflows, prices, pme_prices)[2]
