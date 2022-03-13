@@ -26,6 +26,8 @@ def get_historical_data(ticker: str, type: str, **kwargs) -> pd.DataFrame:
     """Small wrapper to make the investpy interface accessible in a more unified fashion.
     """
     kwargs[type] = ticker
+    if type == "crypto" and "country" in kwargs:
+        del kwargs["country"]
     return getattr(investpy, "get_" + type + "_historical_data")(**kwargs)
 
 
