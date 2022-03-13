@@ -1,5 +1,7 @@
 """Calculate PME (Public Market Equivalent) for both evenly and unevenly spaced
-cashflows. Calculation according to
+cashflows. 
+
+Calculation according to
 https://en.wikipedia.org/wiki/Public_Market_Equivalent#Modified_PME
 
 Args:
