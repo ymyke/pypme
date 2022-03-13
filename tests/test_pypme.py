@@ -115,6 +115,8 @@ def test_xpme_hypothesis_driven(lists):
         )
     except ValueError as exc:
         assert "least one cashflow" in str(exc) or "All prices" in str(exc)
+    except OverflowError as exc:
+        assert "Result too large" in str(exc)
     else:
         assert xnpv(df["PME", "CF"], pme_irr) == 0
         assert xnpv(df["Asset", "CF"], asset_irr) == 0
