@@ -11,7 +11,6 @@ Args:
 Note:
 - Both `prices` and `pme_prices` need an additional item at the end for the last
   interval / point in time, for which the PME is calculated.
-- Obviously, all prices must be in the same (implicit) currency.
 - `cashflows` has one fewer entry than the other lists because the last cashflow is
   implicitly assumed to be the current NAV at that time.
 

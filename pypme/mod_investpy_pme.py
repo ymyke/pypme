@@ -8,9 +8,6 @@ import pandas as pd
 import investpy
 from .pme import verbose_xpme
 
-# FIXME What about currencies? (They are in the dataframe, should I check for them?
-# Against what?)
-
 # FIXME Also add a version based on SearchObj?
 
 # FIXME Take care of rate limiting issues on investing.
