@@ -71,7 +71,8 @@ Produces:
 ```
 
 The investpy functions take the following parameters:
-- `pme_type`: One of `stock`, `etf`, `fund`, `crypto`. Defaults to `stock`.
+- `pme_type`: One of `stock`, `etf`, `fund`, `crypto`, `bond`, `index`, `certificate`.
+  Defaults to `stock`.
 - `pme_ticker`: The ticker symbol/name.
 - `pme_country`: The ticker's country of residence. Defaults to `united states`.
 
