@@ -8,12 +8,6 @@ import pandas as pd
 import investpy
 from .pme import verbose_xpme
 
-# FIXME Also add a version based on SearchObj?
-
-# FIXME Take care of rate limiting issues on investing.
-
-# FIXME Add a version that also takes a ticker for the asset and looks up its prices?
-
 # FIXME Add documentation (here and in README)
 
 
