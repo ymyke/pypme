@@ -81,7 +81,7 @@ def test_xpme():
     "list1, list2, list3, exc_pattern",
     [
         ([], [], [], "Must have at least one cashflow"),
-        ([1], [], [], "At least one cashflow must be negative"),
+        ([1], [], [], "The first cashflow must be negative"),
         ([-1], [0], [], "All prices must be > 0"),
         ([-1], [], [], "Inconsistent input data"),
     ],
@@ -114,7 +114,7 @@ def test_xpme_hypothesis_driven(lists):
             lists[0], lists[1][:-1], lists[2], lists[3]
         )
     except ValueError as exc:
-        assert "least one cashflow" in str(exc) or "All prices" in str(exc)
+        assert "The first cashflow" in str(exc) or "All prices" in str(exc)
     except OverflowError as exc:
         assert "Result too large" in str(exc)
     else:

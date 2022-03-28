@@ -37,9 +37,9 @@ def verbose_pme(
     """Calculate PME for evenly spaced cashflows and return vebose information."""
     if len(cashflows) == 0:
         raise ValueError("Must have at least one cashflow")
-    if not any(x < 0 for x in cashflows):
+    if not cashflows[0] < 0:
         raise ValueError(
-            "At least one cashflow must be negative, i.e., a buy of some of the asset"
+            "The first cashflow must be negative, i.e., a buy of some of the asset"
         )
     if not all(x > 0 for x in prices + pme_prices):
         raise ValueError("All prices must be > 0")
