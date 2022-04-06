@@ -2,3 +2,4 @@ poetry.lock
 *.pyc
 .hypothesis/
 dist/
+settings.json
