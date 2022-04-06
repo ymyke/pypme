@@ -40,18 +40,17 @@ def investpy_verbose_pme(
     """Calculate PME return vebose information, retrieving PME price information from
     Investing.com in real time.
     """
-    dates_as_str = [x.strftime("%d/%m/%Y") for x in sorted(dates)]
     pmedf = get_historical_data(
         pme_ticker,
         pme_type,
         country=pme_country,
-        from_date=dates_as_str[0],
-        to_date=dates_as_str[-1],
+        from_date=dates[0].strftime("%d/%m/%Y"),
+        to_date=dates[-1].strftime("%d/%m/%Y"),
     )
     # Pick the nearest price if there is no price for an exact date:
     pme_prices = [
         pmedf.iloc[pmedf.index.get_indexer([x], method="nearest")[0]]["Close"]
-        for x in dates_as_str
+        for x in dates
     ]
     return verbose_xpme(dates, cashflows, prices, pme_prices)
 
