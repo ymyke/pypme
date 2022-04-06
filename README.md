@@ -1,4 +1,4 @@
-# pypme – Python library for PME (Public Market Equivalent) calculation
+# pypme – Python package for PME (Public Market Equivalent) calculation
 
 Based on the [Modified PME
 method](https://en.wikipedia.org/wiki/Public_Market_Equivalent#Modified_PME).
@@ -82,7 +82,7 @@ details.
 
 ## Garbage in, garbage out
 
-Note that the library will only perform essential sanity checks and otherwise just works
+Note that the package will only perform essential sanity checks and otherwise just works
 with what it gets, also with nonsensical data. E.g.:
 
 ```python
