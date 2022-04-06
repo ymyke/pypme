@@ -40,26 +40,26 @@ Notes:
   case, the IRR is for the underlying period.
 - `verbose_pme`: Calculate PME for evenly spaced cashflows and return vebose
   information.
-- `investpy_pme` and `investpy_verbose_pme`: Use price information from Investing.com.
+- `investpy_xpme` and `investpy_verbose_xpme`: Use price information from Investing.com.
   See below.
 
 ## Investpy examples -- using investpy to retrieve PME prices online
 
-Use `investpy_pme` and `investpy_verbose_pme` to use a ticker from Investing.com and
+Use `investpy_xpme` and `investpy_verbose_xpme` to use a ticker from Investing.com and
 compare with those prices. Like so:
 
 ```python
 from datetime import date
-from pypme import investpy_pme
+from pypme import investpy_xpme
 
 common_args = {
     "dates": [date(2012, 1, 1), date(2013, 1, 1)],
     "cashflows": [-100],
     "prices": [1, 1],
 }
-print(investpy_pme(pme_ticker="Global X Lithium", pme_type="etf", **common_args))
-print(investpy_pme(pme_ticker="bitcoin", pme_type="crypto", **common_args))
-print(investpy_pme(pme_ticker="SRENH", pme_type="stock", pme_country="switzerland", **common_args))
+print(investpy_xpme(pme_ticker="Global X Lithium", pme_type="etf", **common_args))
+print(investpy_xpme(pme_ticker="bitcoin", pme_type="crypto", **common_args))
+print(investpy_xpme(pme_ticker="SRENH", pme_type="stock", pme_country="switzerland", **common_args))
 ```
 
 Produces:

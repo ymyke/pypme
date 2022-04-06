@@ -1,7 +1,7 @@
 import pytest
 from datetime import date
 import pandas as pd
-from pypme.mod_investpy_pme import investpy_pme, investpy_verbose_pme
+from pypme.mod_investpy_pme import investpy_xpme, investpy_verbose_xpme
 
 
 @pytest.mark.parametrize(
@@ -32,7 +32,7 @@ from pypme.mod_investpy_pme import investpy_pme, investpy_verbose_pme
         ),
     ],
 )
-def test_investpy_pme(
+def test_investpy_xpme(
     mocker,
     dates,
     cashflows,
@@ -53,7 +53,7 @@ def test_investpy_pme(
             {"Close": {pd.Timestamp(x): y for x, y in zip(pme_timestamps, pme_prices)}}
         ),
     )
-    pme_irr, asset_irr, df = investpy_verbose_pme(
+    pme_irr, asset_irr, df = investpy_verbose_xpme(
         dates=dates,
         cashflows=cashflows,
         prices=prices,
@@ -63,7 +63,7 @@ def test_investpy_pme(
     assert round(asset_irr * 100.0, 2) == round(target_asset_irr, 2)
     assert isinstance(df, pd.DataFrame)
 
-    pme_irr = investpy_pme(
+    pme_irr = investpy_xpme(
         dates=dates,
         cashflows=cashflows,
         prices=prices,
@@ -72,9 +72,9 @@ def test_investpy_pme(
     assert round(pme_irr * 100.0, 2) == round(target_pme_irr, 2)
 
 
-def test_investpy_pme_networked():
-    """Test `investpy_pme` with an actual network/API call."""
-    pme_irr, asset_irr, df = investpy_verbose_pme(
+def test_investpy_xpme_networked():
+    """Test `investpy_xpme` with an actual network/API call."""
+    pme_irr, asset_irr, df = investpy_verbose_xpme(
         dates=[date(2012, 1, 1), date(2013, 1, 1)],
         cashflows=[-100],
         prices=[1, 1.1],

@@ -41,7 +41,7 @@ def get_historical_data(ticker: str, type: str, **kwargs) -> pd.DataFrame:
     return getattr(investpy, "get_" + type + "_historical_data")(**kwargs)
 
 
-def investpy_verbose_pme(
+def investpy_verbose_xpme(
     dates: List[date],
     cashflows: List[float],
     prices: List[float],
@@ -64,7 +64,7 @@ def investpy_verbose_pme(
     )
 
 
-def investpy_pme(
+def investpy_xpme(
     dates: List[date],
     cashflows: List[float],
     prices: List[float],
@@ -75,6 +75,6 @@ def investpy_pme(
     """Calculate PME and return the PME IRR only, retrieving PME price information from
     Investing.com in real time.
     """
-    return investpy_verbose_pme(
+    return investpy_verbose_xpme(
         dates, cashflows, prices, pme_ticker, pme_type, pme_country
     )[0]
