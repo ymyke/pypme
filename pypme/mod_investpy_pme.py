@@ -21,6 +21,18 @@ import investpy
 from .pme import verbose_xpme
 
 
+def pick_prices_from_dataframe(
+    dates: List[date], pricedf: pd.DataFrame, which_column: str
+) -> List[float]:
+    """Return the prices from `pricedf` that are nearest to dates `dates`. Use
+    `which_column` to pick the dataframe column.
+    """
+    return list(
+        pricedf.iloc[pricedf.index.get_indexer([x], method="nearest")[0]][which_column]
+        for x in dates
+    )
+
+
 def get_historical_data(ticker: str, type: str, **kwargs) -> pd.DataFrame:
     """Small wrapper to make the investpy interface accessible in a more unified fashion."""
     kwargs[type] = ticker
@@ -47,12 +59,9 @@ def investpy_verbose_pme(
         from_date=dates[0].strftime("%d/%m/%Y"),
         to_date=dates[-1].strftime("%d/%m/%Y"),
     )
-    # Pick the nearest price if there is no price for an exact date:
-    pme_prices = [
-        pmedf.iloc[pmedf.index.get_indexer([x], method="nearest")[0]]["Close"]
-        for x in dates
-    ]
-    return verbose_xpme(dates, cashflows, prices, pme_prices)
+    return verbose_xpme(
+        dates, cashflows, prices, pick_prices_from_dataframe(dates, pmedf, "Close")
+    )
 
 
 def investpy_pme(
