@@ -42,7 +42,7 @@ def test_investpy_pme(
     target_pme_irr,
     target_asset_irr,
 ):
-    """Test both the verbose and non-verbose variant at the same to keep things simple.
+    """Test both the verbose and non-verbose variant in one go to keep things simple.
 
     Note that this test does _not_ hit the network / investing API since the relevant
     function gets mocked.
