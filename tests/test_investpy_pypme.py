@@ -70,3 +70,17 @@ def test_investpy_pme(
         pme_ticker="dummy",
     )
     assert round(pme_irr * 100.0, 2) == round(target_pme_irr, 2)
+
+
+def test_investpy_pme_networked():
+    """Test `investpy_pme` with an actual network/API call."""
+    pme_irr, asset_irr, df = investpy_verbose_pme(
+        dates=[date(2012, 1, 1), date(2013, 1, 1)],
+        cashflows=[-100],
+        prices=[1, 1.1],
+        pme_ticker="MSFT",
+    )
+    assert round(pme_irr * 100.0, 2) == -0.22
+    assert round(asset_irr * 100.0, 2) == 9.97
+    assert isinstance(df, pd.DataFrame)
+    assert df.shape == (2, 9)
