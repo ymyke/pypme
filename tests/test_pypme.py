@@ -6,10 +6,6 @@ from xirr.math import xnpv
 from pypme import __version__, verbose_pme, pme, verbose_xpme, xpme
 
 
-def test_version():
-    assert __version__ == "0.3.0"
-
-
 @pytest.mark.parametrize(
     "cashflows, prices, pme_prices, target_pme_irr, target_asset_irr",
     [
