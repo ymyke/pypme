@@ -40,44 +40,32 @@ Notes:
   case, the IRR is for the underlying period.
 - `verbose_pme`: Calculate PME for evenly spaced cashflows and return vebose
   information.
-- `investpy_xpme` and `investpy_verbose_xpme`: Use price information from Investing.com.
-  See below.
+- `tessa_xpme` and `tessa_verbose_xpme`: Use live price information via the tessa
+  library. See below.
 
-## Investpy examples -- using investpy to retrieve PME prices online
+## tessa examples – using tessa to retrieve PME prices online
 
-Use `investpy_xpme` and `investpy_verbose_xpme` to use a ticker from Investing.com and
-compare with those prices. Like so:
+Use `tessa_xpme` and `tessa_verbose_xpme` to get live prices via the [tessa
+library](https://github.com/ymyke/tessa) and use those prices as the PME. Like so:
 
 ```python
-from datetime import date
-from pypme import investpy_xpme
+from datetime import datetime, timezone
+from pypme import tessa_xpme
 
 common_args = {
-    "dates": [date(2012, 1, 1), date(2013, 1, 1)],
+    "dates": [
+        datetime(2012, 1, 1, tzinfo=timezone.utc), 
+        datetime(2013, 1, 1, tzinfo=timezone.utc)
+    ],
     "cashflows": [-100],
     "prices": [1, 1],
 }
-print(investpy_xpme(pme_ticker="Global X Lithium", pme_type="etf", **common_args))
-print(investpy_xpme(pme_ticker="bitcoin", pme_type="crypto", **common_args))
-print(investpy_xpme(pme_ticker="SRENH", pme_type="stock", pme_country="switzerland", **common_args))
+print(tessa_xpme(pme_ticker="LIT", **common_args))  # source will default to "yahoo"
+print(tessa_xpme(pme_ticker="bitcoin", pme_source="coingecko", **common_args))
+print(tessa_xpme(pme_ticker="SREN.SW", pme_source="yahoo", **common_args))
 ```
 
-Produces:
-
-```
--0.02834024870462727
-1.5031336254547634
-0.3402634808264912
-```
-
-The investpy functions take the following parameters:
-- `pme_type`: One of `stock`, `etf`, `fund`, `crypto`, `bond`, `index`, `certificate`.
-  Defaults to `stock`.
-- `pme_ticker`: The ticker symbol/name.
-- `pme_country`: The ticker's country of residence. Defaults to `united states`.
-
-Check out [the Investpy project](https://github.com/alvarobartt/investpy) for more
-details.
+Note that the dates need to be timezone-aware for these functions.
 
 
 ## Garbage in, garbage out

@@ -45,8 +45,8 @@ def test_tessa_xpme(
 ):
     """Test both the verbose and non-verbose variant in one go to keep things simple.
 
-    Note that this test does _not_ hit the network / investing API since the relevant
-    function gets mocked.
+    Note that this test does _not_ hit the network since the relevant function gets
+    mocked.
     """
     mocker.patch(
         "tessa.price_history",
