@@ -1,15 +1,11 @@
-"""Calculate PME and get the prices from Investing.com via the `investpy` module.
-
-Important: The Investing API has rate limiting measures in place and will block you if
-you hit the API too often. You will notice by getting 429 errors (or maybe
-also/alternatively 503). Wait roughly 2 seconds between each consecutive call to the API
-via the functions in this module.
+"""Calculate PME and get the prices via tessa library (https://github.com/ymyke/tessa).
 
 Args: 
-- pme_type: One of "stock", "etf", "fund", "crypto", "bond", "index", "certificate".
-  Defaults to "stock".
-- pme_ticker: The ticker symbol/name.
-- pme_country: The ticker's country of residence. Defaults to "united states".
+
+- `pme_ticker`: The ticker symbol/name.
+- `pme_source`: The source to look up the ticker from, e.g., "yahoo" or "coingecko".
+
+For both arguments, refer to the tessa library for details.
 
 Refer to the `pme` module to understand other arguments and what the functions return.
 """
@@ -17,7 +13,7 @@ Refer to the `pme` module to understand other arguments and what the functions r
 from typing import List, Tuple
 from datetime import date
 import pandas as pd
-import investpy
+import tessa
 from .pme import verbose_xpme
 
 
@@ -33,48 +29,30 @@ def pick_prices_from_dataframe(
     )
 
 
-def get_historical_data(ticker: str, type: str, **kwargs) -> pd.DataFrame:
-    """Small wrapper to make the investpy interface accessible in a more unified fashion."""
-    kwargs[type] = ticker
-    if type == "crypto" and "country" in kwargs:
-        del kwargs["country"]
-    return getattr(investpy, "get_" + type + "_historical_data")(**kwargs)
-
-
-def investpy_verbose_xpme(
+def tessa_verbose_xpme(
     dates: List[date],
     cashflows: List[float],
     prices: List[float],
     pme_ticker: str,
-    pme_type: str = "stock",
-    pme_country: str = "united states",
+    pme_source: tessa.SourceType = "yahoo",
 ) -> Tuple[float, float, pd.DataFrame]:
-    """Calculate PME return vebose information, retrieving PME price information from
-    Investing.com in real time.
+    """Calculate PME return vebose information, retrieving PME price information via
+    tessa library in real time.
     """
-    pmedf = get_historical_data(
-        pme_ticker,
-        pme_type,
-        country=pme_country,
-        from_date=dates[0].strftime("%d/%m/%Y"),
-        to_date=dates[-1].strftime("%d/%m/%Y"),
-    )
+    pmedf = tessa.price_history(pme_ticker, pme_source).df
     return verbose_xpme(
-        dates, cashflows, prices, pick_prices_from_dataframe(dates, pmedf, "Close")
+        dates, cashflows, prices, pick_prices_from_dataframe(dates, pmedf, "close")
     )
 
 
-def investpy_xpme(
+def tessa_xpme(
     dates: List[date],
     cashflows: List[float],
     prices: List[float],
     pme_ticker: str,
-    pme_type: str = "stock",
-    pme_country: str = "united states",
-) -> Tuple[float, float, pd.DataFrame]:
-    """Calculate PME and return the PME IRR only, retrieving PME price information from
-    Investing.com in real time.
+    pme_source: tessa.SourceType = "yahoo",
+) -> float:
+    """Calculate PME and return the PME IRR only, retrieving PME price information via
+    tessa library in real time.
     """
-    return investpy_verbose_xpme(
-        dates, cashflows, prices, pme_ticker, pme_type, pme_country
-    )[0]
+    return tessa_verbose_xpme(dates, cashflows, prices, pme_ticker, pme_source)[0]
