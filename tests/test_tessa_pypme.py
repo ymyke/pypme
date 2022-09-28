@@ -2,7 +2,7 @@ import pytest
 from datetime import datetime, timezone, date
 import pandas as pd
 from tessa.price import PriceHistory
-from pypme.mod_investpy_pme import tessa_xpme, tessa_verbose_xpme
+from pypme.mod_tessa_pme import tessa_xpme, tessa_verbose_xpme
 
 
 @pytest.mark.parametrize(
