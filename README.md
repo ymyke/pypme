@@ -85,6 +85,13 @@ Results in this df and IRRs of 0:
 
 ![Garbage example df](https://raw.githubusercontent.com/ymyke/pypme/main/images/garbage_example_df.png)
 
+
+## Other noteworthy libraries
+
+- [tessa](https://github.com/ymyke/tessa): Find financial assets and get their price history without worrying about different APIs or rate limiting.
+- [strela](https://github.com/ymyke/strela): A python package for financial alerts.
+
+
 ## References
 
 - [Google Sheet w/ reference calculation](https://docs.google.com/spreadsheets/d/1LMSBU19oWx8jw1nGoChfimY5asUA4q6Vzh7jRZ_7_HE/edit#gid=0)
