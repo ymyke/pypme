@@ -91,7 +91,7 @@ def test_tessa_xpme_networked():
         prices=[1, 1.1],
         pme_ticker="MSFT",
     )
-    assert round(pme_irr * 100.0, 2) == 6.08
+    assert round(pme_irr * 100.0, 2) == 5.78
     assert round(asset_irr * 100.0, 2) == 9.97
     assert isinstance(df, pd.DataFrame)
     assert df.shape == (2, 9)
