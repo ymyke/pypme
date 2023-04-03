@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypme"
-version = "0.5.1"
+version = "0.5.2"
 description = "Python package for PME (Public Market Equivalent) calculation"
 authors = ["ymyke"]
 license = "MIT"
@@ -14,7 +14,7 @@ python = ">=3.8, <3.10"
 xirr = "^0.1.8"
 numpy-financial = "^1.0.0"
 pandas = "^1.4.1"
-tessa = "^0.5"
+tessa = ">=0.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
