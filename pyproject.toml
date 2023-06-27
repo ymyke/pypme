@@ -10,18 +10,17 @@ readme = "README.md"
 keywords = ["python", "finance", "investing", "financial-analysis", "pme", "investment-analysis"]
 
 [tool.poetry.dependencies]
-python = ">=3.8, <3.10"
-xirr = "^0.1.8"
-numpy-financial = "^1.0.0"
-pandas = "^1.4.1"
-tessa = ">=0.5"
+python = ">=3.9"
+xirr = "^0"
+numpy-financial = "^1"
+pandas = "^1.4"
+tessa = "^0.8"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
-ipykernel = "^6.9.1"
-black = "^22.1.0"
-hypothesis = "^6.39.3"
-pytest-mock = "^3.7.0"
+pytest = "^6.2"
+pytest-mock = "^3.7"
+black = "^22.1"
+hypothesis = "^6.39"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
