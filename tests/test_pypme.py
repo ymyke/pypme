@@ -3,7 +3,7 @@ from datetime import date
 from hypothesis import given, strategies as st, settings, Verbosity
 import pandas as pd
 from xirr.math import xnpv
-from pypme import __version__, verbose_pme, pme, verbose_xpme, xpme
+from pypme import verbose_pme, pme, verbose_xpme, xpme
 
 
 @pytest.mark.parametrize(
