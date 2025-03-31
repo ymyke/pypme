@@ -3,3 +3,4 @@ poetry.lock
 .hypothesis/
 dist/
 settings.json
+.venv/
