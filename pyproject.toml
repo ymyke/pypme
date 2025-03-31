@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypme"
-version = "0.6.1"
+version = "0.6.2"
 description = "Python package for PME (Public Market Equivalent) calculation"
 authors = ["ymyke"]
 license = "MIT"
@@ -13,14 +13,14 @@ keywords = ["python", "finance", "investing", "financial-analysis", "pme", "inve
 python = ">=3.9"
 xirr = "^0"
 numpy-financial = "^1"
-pandas = "^1.4"
-tessa = "^0.8"
+pandas = "^2.2"
+tessa = "^0.9"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2"
+pytest = "^8"
 pytest-mock = "^3.7"
-black = "^22.1"
-hypothesis = "^6.39"
+black = "^24"
+hypothesis = "^6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
